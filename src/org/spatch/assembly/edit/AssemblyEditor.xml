@@ -1,0 +1,112 @@
+
+<EditorWindow name="Assembly Editor" 
+	      controllerClass="AssemblyController"
+	      closeAction="hide">
+    
+    <Role edits="assembly"/>
+    
+    
+    <Frame id="MainFrame" title="Assembly" backgroundColor="#e8e8e4"> 
+	<Menu label="file">
+	    <MenuItem label="save" action="save" id="saveMenuItem"/>
+	    <MenuItem label="close" action="close"/>
+	</Menu>
+	
+	<BorderPanel>
+	    <Center>
+
+	<LeftRightSplitPanel borderWidth="6">
+	    
+            <AssemblyPanel borderWidth="4" prefWidth="500" prefHeight="500"
+			   id="AssemblyPanel" canvasColor="#d8d8d4" shelfColor="#e0e0dc"/>
+	    
+	    
+	    <UpDownSplitPanel borderWidth="4" prefWidth="420" prefHeight="500">
+		<ScrollingInfoPanel prefWidth="420" prefHeight="200" sources="info"/>
+		
+		<TabbedPanel id="editors">
+		    
+		    <ScrollPanel title="Main" id="mainTablePanel"
+				 vertical="as_needed" horizontal="never" 
+				 border="none">
+			<ScrollableBorderPanel>
+			    <North>
+				<ContainerPanel id="maintable" title="Table"/>
+			    </North>
+			</ScrollableBorderPanel>
+		    </ScrollPanel>
+
+		    
+		    <VariableSizeCardPanel title="Component" id="params">
+
+			<BorderPanel title="Empty">
+			    <North>
+				<HTMLPanel>
+				    <content>
+					Properties of the selected item - currently no item is selected.
+				    </content>
+				</HTMLPanel> 
+			    </North>
+			</BorderPanel>
+			
+			
+			<BorderPanel id="shapePanel" title="Shape">
+			    <North>
+				<Insert source="ShapeParametersPanel" id="ShapeParameters"/>
+			    </North>
+			</BorderPanel>
+			
+			
+
+			<BorderPanel id="tablePanel" title="Table"> 
+			   <Center>
+			       <ScrollPanel vertical="as_needed" horizontal="never" 
+					    border="none">
+				   <ScrollableBorderPanel>
+				       <North>
+					   <KitPanel id="kit" title="Table">
+					       
+					       <ChildrenOf src="FieldEditors"/>
+					       
+					       <ChildrenOf src="CompactTableEditor"/>
+
+					       <BorderPanel id="SetItemViewer">
+						   <West>
+						       <Button label="pending" id="nameButton" action="setClicked"
+							       border="none" hover="up">
+							   <tip>edit this list</tip>
+						       </Button>
+						   </West>
+						   <Center>
+						       <DashedLine/>
+						   </Center>
+					       </BorderPanel>
+					       
+					       
+
+					   </KitPanel>
+				       </North>
+				   </ScrollableBorderPanel>
+			       </ScrollPanel>
+			   </Center>
+			</BorderPanel>
+		    </VariableSizeCardPanel>
+		</TabbedPanel>
+		
+	    </UpDownSplitPanel>
+	</LeftRightSplitPanel>
+
+
+	    </Center>
+	    <South>
+		<RightFlowPanel borderWidth="4" xspace="4" yspace="4">
+		    <Button label="save" action="save"/>
+		    <Button label="close" action="close"/>
+		</RightFlowPanel>
+
+	    </South>
+	</BorderPanel>
+	
+    </Frame>
+    
+</EditorWindow>

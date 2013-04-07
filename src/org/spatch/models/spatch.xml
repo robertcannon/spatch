@@ -1,0 +1,282 @@
+<Lems>
+
+	  <Dimension name="voltage" m="1" l="2" t="-3" i="-1"/>
+    <Dimension name="time" t="1"/>
+    <Dimension name="conductance" m="-1" l="-2" t="3" i="2"/>
+    <Dimension name="capacitance" m="-1" l="-2" t="4" i="2"/>
+    <Dimension name="current" i="1"/>
+	<Dimension name="concentration" l="-3" n="1"/>
+
+	<ComponentType name="Species" standalone="true">
+		<IntegerParameter name="valence"/>
+	</ComponentType>
+
+	<ComponentType name="CompoundElement">
+		<ComponentReference name="species" type="Species"/>
+		<IntegerParameter name="number"/>
+	</ComponentType>
+
+	<ComponentType name="Compound" standalone="true">
+	 	<Children name="constitutents" type="CompoundElement"/>
+	</ComponentType>
+
+	<ComponentType name="SolutionElement">
+		<ComponentReference name="compound" type="Compound"/>
+		<Parameter dimension="concentration" name="concentration"/>
+	</ComponentType>
+
+	<ComponentType name="Solution" standalone="true">
+		<About>
+		    <p>Solutions are defined by their various components and the concentration of each.</p>
+		</About>
+		<Text name="role"/>	
+		<Children type="SolutionElement" name="constituents"/>
+	</ComponentType>
+
+
+ 
+	<ComponentType name="Setup" standalone="true">
+		<Children name="bottles" type="Bottle"/>
+		<Children name="earths" type="Earth"/>
+		<Children name="stimBoxes" type="StimBox"/>
+		<Children name="stimPipettes" type="StimPipette"/>
+		<Children name="baths" type="Bath"/>
+		<Children name="pipettes" type="Pipette"/>
+		<Children name="controllers" type="Controller"/>
+	
+	</ComponentType>
+
+
+	<ComponentType name="Bottle">
+		<ComponentReference name="solution" type="Solution"/>
+	 	
+	 	<Visualization>
+			<PolyFill xpts="-0.6,  -0.6, -0.5,   0.5,  0.6,  0.6"
+					  ypts="0.0,  -0.9, -0.95, -0.95, -0.9, 0.0"
+			          fillColor="#f0c030"/>
+	        <PolyLine xpts="-0.28, -0.2,  -0.2,  -0.6,  -0.6, -0.5,   0.5,  0.6,  0.6,  0.2, 0.2, 0.28"
+					  ypts="0.9,  0.8,     0.6,   0.2,  -0.9, -0.95, -0.95, -0.9, 0.2,  0.6, 0.8, 0.9"
+					  lineColor="#202020" lineWidth="2"/> 
+			<LinkTargetConnector x="0.0" y="0.7"/>
+	 	</Visualization>	
+			 
+	</ComponentType>
+
+
+	<ComponentType name="Controller">
+		<ComponentReference name="stimulation" type="Stimulation"/>
+		<ComponentReference local="true"  name="earth" type="Earth"/>
+		
+		<ComponentReference local="true"  name="stimulation" type="Pipette"/>
+		<ComponentReference local="true"  name="recording" type="Pipette"/>
+	 	<Visualization>
+		   <Rectangle width="0.4" height="1.6" x="-0.8" y="-0.2" lineColor="#808080" fillColor="#a0a0a0"/>
+		 
+		   <Rectangle width="0.2" height="0.4" x="0.3" y="-0.5" fillColor="#606060" lineWidth="0"/>
+		   <Rectangle width="1.4" height="1.0" x="0.3" y="0.2" lineColor="#000000" fillColor="#606060" lineWidth="1" cornerRadius="0.2"/>
+		   <Rectangle width="1.2" height="0.8" x="0.3" y="0.2" fillColor="#f8f8f8" lineWidth="0" cornerRadius="0.1"/>
+		   <Rectangle width="1.2" height="0.3" x="0.3" y="-0.8" fillColor="#404040" lineWidth="1" cornerRadius="0.2"/>
+		   
+			<LinkTargetConnector x="-1.0" y="0.2" visible="false"/>
+			<LinkSourceConnector componentReference="earth" x="-1.0" y="-0.7"/>
+			<LinkSourceConnector componentReference="stimulation" x="-1.0" y="-0.2"/>
+			<LinkSourceConnector componentReference="recording" x="-1.0" y="0.1"/>
+		</Visualization>
+	</ComponentType>
+	
+	<ComponentType name="StimBox">
+		<ComponentReference name="stimulation" type="Stimulation"/>
+		<ComponentReference local="true"  name="earth" type="Earth"/>		
+		<ComponentReference local="true"  name="pipette" type="StimPipette"/>
+		<Visualization>
+		   <Rectangle width="1.8" height="1.0" x="0.0" y="0.0" lineColor="#808080" fillColor="#202020"/>
+		   <Circle diameter="0.2" x="0.5" y="0.15" lineWidth="0" fillColor="#e0e0e0"/>
+		    <Circle diameter="0.2" x="0.5" y="-0.15" lineWidth="0" fillColor="#e0e0e0"/>
+		   <PolyLine xpts="-0.6, -0.4, -0.4, -0.2,-0.2, 0" ypts="-0.1, -0.1, 0.2, 0.2, -0.1, -0.1" lineColor="#ffffff"/>
+	 	   
+			<LinkTargetConnector x="0.0" y="0.2" visible="false"/>
+			<LinkSourceConnector componentReference="earth" x="-0.9" y="-0.2"/>
+			<LinkSourceConnector componentReference="pipette" x="0.9" y="0.2"/>
+		</Visualization>
+	</ComponentType>
+	
+	
+	
+
+	<ComponentType name="Bath">
+		<ComponentReference name="preparation" type="Preparation"/>
+		<ComponentReference local="true"  name="bottle" type="Bottle"/>
+		 <Visualization>
+			<Rectangle width="1.6" height="1.6" cornerRadius="0.2" lineColor="#202080" fillColor="#d0d0d0" lineWidth="2"/>
+			<LinkTargetConnector x="0.0" y="0.8"/>
+			<LinkSourceConnector componentReference="bottle" x="-0.8" y="0.0"/>
+		</Visualization>
+	</ComponentType>
+
+
+	<ComponentType name="Earth">
+		 <Visualization>
+			<Rectangle x="0.0" y="0.2" width="2.0" height="0.12" fillColor="#000000"/>
+			<Rectangle x="0.0" y="-0.3" width="1.2" height="0.12" fillColor="#000000"/>
+			<Rectangle x="0.0" y="-0.8" width="0.4" height="0.12" fillColor="#000000"/>
+			<Rectangle x="0.0" y="0.55" width="0.08" height="0.8" fillColor="#000000"/>
+			<LinkTargetConnector x="0.0" y="0.9"/>
+		</Visualization>
+	</ComponentType>
+
+	<ComponentType name="Pipette">
+		<ComponentReference name="solution" type="Solution"/>
+		<ComponentReference local="true"  name="bottle" type="Bottle"/>
+		<ComponentReference local="true"  name="bath" type="Bath"/>
+		<ComponentReference name="patch" type="Patch"/>
+		 <Visualization>
+			<PolyLine xpts="-0.52, 0.8" ypts="-0.65, 1.0"/>
+			<PolyFill xpts="0.1, 0.7, 0.5, -0.1" ypts="-0.08, 0.67, 0.83, 0.08" fillColor="#808080"/>  
+			<PolyFill xpts="-0.65, -0.8, -0.35" ypts="-0.505, -1., -0.745" fillColor="#60b040"/>
+			<PolyLine xpts="-0.5, -0.8, 0.1" ypts="-0.01, -1., -0.49"/>
+			<LinkTargetConnector x="0.8" y="1.0"/>
+			<LinkSourceConnector componentReference="bottle" x="-0.5" y="0.01"/>
+			<LinkSourceConnector componentReference="bath" x="-0.8" y="-1.0"/>
+		</Visualization>
+		
+	</ComponentType>
+
+
+   <ComponentType name="StimPipette">
+		<ComponentReference name="solution" type="Solution"/>
+		<ComponentReference local="true" name="bottle" type="Bottle"/>
+		<ComponentReference local="true"  name="bath" type="Bath"/>
+		<ComponentReference name="patch" type="Patch"/>
+		 <Visualization>
+			<PolyLine xpts="0.52, -0.8" ypts="-0.65, 1.0"/>
+			<PolyFill xpts="-0.1, -0.7, -0.5, 0.1" ypts="-0.08, 0.67, 0.83, 0.08" fillColor="#f08020"/>  
+			<PolyFill xpts="0.65, 0.8, 0.35" ypts="-0.505, -1., -0.745" fillColor="#ff8080"/>
+			<PolyLine xpts="0.5, 0.8, -0.1" ypts="-0.01, -1., -0.49"/>
+			<LinkTargetConnector x="-0.8" y="1.0"/>
+			<LinkSourceConnector componentReference="bottle" x="0.5" y="0.01"/>
+			<LinkSourceConnector componentReference="bath" x="0.8" y="-1.0"/>
+		 </Visualization>
+		
+	</ComponentType>
+
+
+	<Solution id="NaCl" name="Sodium Chnloride solution" role="internal">
+		<About><p>This is the sodium chloride solution</p></About>
+	</Solution>
+	
+	<Solution id="ExtTTX" name="External with ttx" role="external">
+		<About><p>and the ext ttx</p></About>
+	</Solution>
+	
+	<Solution id="Ext1" name="another external" role="external">
+		<About><p>And this one</p><p>has two paras!</p></About>
+	</Solution>
+	
+	<Solution id="Ext-Krebs" name="Krebs external" role="external">
+		<About><p>
+			Classical Krebs solution that bathes the external side of the 
+membrane when one wants to record the activity of all the 
+channels present in the membrane in the whole-cell 
+configuration.
+		</p></About>
+	</Solution>
+
+	<ComponentType name="Patch">
+	 
+	</ComponentType>
+
+
+	<ComponentType name="Preparation" standalone="true">
+	   
+	</ComponentType>
+
+
+	<Preparation id="prep1" name="Simple cells">
+		<About><p>Information about the simple cells preparation</p></About>
+	</Preparation>
+
+	<Preparation id="prep2" name="Network preparation">
+		<About><p>...about the network preparation</p></About>
+	</Preparation>
+
+
+	<Patch id="insideout" name="Inside out">
+		<About><p>Inside out patch</p></About>
+	</Patch>
+	
+	<Patch id="cellattached" name="Cell attached">
+		<About><p>Cell attached patch</p></About>
+	</Patch>
+
+	<Patch id="outsideout" name="Outside out">
+		<About><p>Outside out patch</p></About>
+	</Patch>
+
+	<Patch id="wholecell" name="Whole cell">
+		<About><p>Whole cell patch</p></About>
+	</Patch>
+	
+
+
+<ComponentType name="Stimulation" standalone="true">
+	 
+</ComponentType>
+
+<ComponentType name="VoltageSteps" extends="Stimulation" standalone="true">
+	<Parameter name="hold" dimension="voltage"/>
+	<Parameter name="onset" dimension="time"/>
+	<Parameter name="duration" dimension="time"/>
+	<Parameter name="firstStep" dimension="voltage"/>
+	<Parameter name="stepSize" dimension="voltage"/>
+	<Parameter name="interStepInterval" dimension="time"/>
+	<Parameter name="nSteps" dimension="none"/>
+</ComponentType>
+
+
+<ComponentType name="CurentSteps" extends="Stimulation" standalone="true">
+	<Parameter name="hold" dimension="current"/>
+	<Parameter name="onset" dimension="time"/>
+	<Parameter name="duration" dimension="time"/>
+	<Parameter name="firstStep" dimension="current"/>
+	<Parameter name="stepSize" dimension="current"/>
+	<Parameter name="interStepInterval" dimension="time"/>
+	<Parameter name="nSteps" dimension="none"/>
+</ComponentType>
+
+
+
+
+
+<ComponentType name="iaf1">
+    <Parameter name="threshold" dimension="voltage"/>
+    <Parameter name="refractoryPeriod" dimension="time"/>
+    <Parameter name="capacitance" dimension="capacitance"/>
+
+
+</ComponentType>
+
+<ComponentType name="iaf3" extends="iaf1">
+    <Parameter name="leakConductance" dimension="conductance"/>
+    <Parameter name="leakReversal" dimension="voltage"/>
+    <Parameter name="deltaV" dimension="voltage"/>
+
+    <EventPort name="spikes-in" direction="in"/>
+    <Exposure name="v" dimension="voltage"/>
+
+    <Dynamics>
+       <StateVariable name="v" exposure="v" dimension="voltage"/>
+       <TimeDerivative variable="v" value="leakConductance * (leakReversal - v) / capacitance"/>
+             
+       <OnEvent port="spikes-in">
+            <StateAssignment variable="v" value="v + deltaV"/>
+       </OnEvent>      
+    </Dynamics>
+
+</ComponentType>
+ 
+ <Component type="Setup" id="Main setup">
+ 
+ </Component>
+ 
+
+</Lems>

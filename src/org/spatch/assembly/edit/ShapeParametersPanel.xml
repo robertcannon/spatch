@@ -1,0 +1,71 @@
+<AutonomousPanel 
+    controllerClass="ShapeParametersController"
+    id="ShapeParameters">
+    
+    <VerticalBoxPanel yspace="4">
+
+	<HorizontalBoxPanel borderWidth="4">
+	    
+	    <RadioButtons layout="vertical" label="closure" id="Closure" 
+			  options="open, closed, filled" action="setClosure">
+		<tip>open, closed and empty or closed and filled</tip>
+		<info>
+		    Each shape has three possible states. "Open" means just the 
+		    points are connected and the last point isn't connected back to the first.
+		    "Closed" means that the last point is connected back to the first to make 
+		    a closed shape. And "filled" means that the line is closed and the 
+		    area inside is filled with a color.
+		</info>
+	    </RadioButtons>
+	    
+	    <GridPanel ncolumn="1">
+		<ColorChoice id="LineColor" label="line color" action="setLineColor">
+		    <tip>the color for the perimeter of a shape</tip>
+		    <info>the line color...</info>
+		</ColorChoice>
+		<ColorChoice id="FillColor" label="fill color" action="setFillColor">
+		    <tip>color for the area inside a filled shape</tip>
+		    <info>
+			This is only used if the shape is set to filled.
+		    </info>
+		</ColorChoice>
+	    </GridPanel>
+	</HorizontalBoxPanel>
+	
+	<FloatSlider id="Smoothness" label="smoothness" 
+		     min="0.0" max="1.0" style="linear" action="setCurviness">
+	    <tip>The degree to which corners are rounded off</tip>
+	    <info>all about smoothness...</info>
+	</FloatSlider>
+	
+
+	<FloatSlider id="LineWidth" label="line width" min="0.0" max="10.0" 
+		     style="linear" action="setLineWidth">
+	    <tip>width of the perimeter in pixels</tip>
+	    <info>aboyut line widths...</info>
+	</FloatSlider>
+
+	
+	<GridPanel ncolumn="2">
+	    <Button label="to front" action="toFront">
+		<tip>put this shape on top of all the others</tip>
+		<info>puts this shape on top of all the others</info>
+	    </Button>
+
+	    <Button label="to back" action="toBack">
+		<tip>put this shape behind all the others</tip>
+		<info>puts this shape behind all the others</info>
+	    </Button>
+
+	    <Button label="raise" action="raise">
+		<tip>Move the shape one layer forwards</tip>
+		<info>This brings the shape forwards so that it is in front of the 
+		    lowest shape that currently overlaps it</info>
+	    </Button>
+
+	    <Button label="lower" action="lower"/>
+	</GridPanel>
+
+    </VerticalBoxPanel>
+
+</AutonomousPanel>
